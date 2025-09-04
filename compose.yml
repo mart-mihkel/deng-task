@@ -1,0 +1,25 @@
+services:
+  app:
+    build: .
+    environment:
+      - PG_URL=dbname=iris user=${PG_USER} password=${PG_PASS} host=postgres port=5432
+      - SECRET_KEY=${SECRET_KEY}
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:17-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: iris
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASS}
+    expose:
+      - 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
