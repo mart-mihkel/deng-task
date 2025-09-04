@@ -1,0 +1,7 @@
+[project]
+name = "deng-task"
+version = "0.1.0"
+description = "Data engineering test task"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
