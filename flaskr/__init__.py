@@ -1,17 +1,22 @@
+import os
+
 from flask import Flask
 from typing import Any, Mapping
 
 from . import db
 
 
+DEV_PG_URL = "dbname=iris user=admin password=admin host=localhost port=5432"
+PG_URL = os.getenv("PG_URL", DEV_PG_URL)
+
+
 def create_app(test_config: Mapping[str, Any] | None = None) -> Flask:
     app = Flask(__name__, instance_relative_config=True)
 
     app.logger.info("Configure app")
-    # TODO: secrets with env
     app.config.from_mapping(
         IRIS_URL="https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/0e7a9b0a5d22642a06d3d5b9bcbad9890c8ee534/iris.csv",
-        DATABASE="dbname=iris user=dev password=dev host=localhost port=5432",
+        PG_URL=PG_URL,
     )
 
     if test_config is None:
