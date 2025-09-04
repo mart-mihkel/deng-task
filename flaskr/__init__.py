@@ -4,6 +4,7 @@ from flask import Flask
 from typing import Any, Mapping
 
 from . import db
+from . import iris
 
 
 DEV_PG_URL = "dbname=iris user=admin password=admin host=localhost port=5432"
@@ -25,6 +26,7 @@ def create_app(test_config: Mapping[str, Any] | None = None) -> Flask:
         app.config.from_mapping(test_config)
 
     db.init_app(app)
+    app.register_blueprint(iris.bp)
 
     app.logger.info("Start app")
     return app
