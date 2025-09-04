@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "flask>=3.1.2",
+    "psycopg>=3.2.9",
 ]
 
 [dependency-groups]
