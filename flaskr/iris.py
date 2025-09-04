@@ -10,7 +10,7 @@ from flask import (
     request,
 )
 
-from flaskr.db import get_db
+from flaskr.db import get_db, wrangle_iris
 
 bp = Blueprint("iris", __name__, url_prefix="/iris")
 
@@ -69,8 +69,7 @@ def __upload_iris() -> tuple[Response, HTTPStatus]:
 
     df = pd.DataFrame.from_records(request.get_json())
     df = __validate_upload_input(df)
-    df["sepal_ratio"] = df["sepal_length"] / df["sepal_width"]
-    df["petal_ratio"] = df["petal_length"] / df["petal_width"]
+    df = wrangle_iris(df)
 
     query = """
         COPY iris (

@@ -39,8 +39,7 @@ def init_db():
 
     current_app.logger.debug("Wrangle iris dataset")
     df = pd.read_csv(io.StringIO(r.text))
-    df["sepal_ratio"] = df["sepal_length"] / df["sepal_width"]
-    df["petal_ratio"] = df["petal_length"] / df["petal_width"]
+    df = wrangle_iris(df)
 
     current_app.logger.debug("Initalize schema")
     with current_app.open_resource("schema.sql") as f:
@@ -59,6 +58,13 @@ def init_db():
 
     cur.close()
     db.commit()
+
+
+def wrangle_iris(df: pd.DataFrame) -> pd.DataFrame:
+    """Simple data transformation utility method"""
+    df["sepal_ratio"] = df["sepal_length"] / df["sepal_width"]
+    df["petal_ratio"] = df["petal_length"] / df["petal_width"]
+    return df
 
 
 @click.command("init-db")
